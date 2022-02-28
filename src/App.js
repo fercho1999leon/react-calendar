@@ -1,20 +1,16 @@
 import * as React from 'react';
 import './App.css';
 import TableModel from './calendar/bodyCalendar/TableModel';
+
 const columns = [
-  { id: 'Mon', label: 'Lunes', minWidth: '10%' },
-  { id: 'Tue', label: 'Martes', minWidth: '10%' },
-  { id: 'Wed', label: 'Miercoles', minWidth: '10%' },
-  { id: 'Thu', label: 'Jueves', minWidth: '10%' },
-  { id: 'Fri', label: 'Viernes', minWidth: '10%' },
-  { id: 'Sat', label: 'Sabado', minWidth: '10%' },
-  { id: 'Sun', label: 'Domingo', minWidth: '10%' },
+  { id: 'Mon', label: '', minWidth: '6rem'},
+  { id: 'Tue', label: '', minWidth: '6rem'},
+  { id: 'Wed', label: '', minWidth: '6rem'},
+  { id: 'Thu', label: '', minWidth: '6rem'},
+  { id: 'Fri', label: '', minWidth: '6rem'},
+  { id: 'Sat', label: '', minWidth: '6rem'},
+  { id: 'Sun', label: '', minWidth: '6rem'},
 ];
-const fecha =()=>{
-  let date = new Date(Date.now());
-  date = new Date(date.getFullYear(),date.getMonth(),0);
-  return date.getDate();
-}
 
 function createData(arreglo) {
   return { 
@@ -28,31 +24,37 @@ function createData(arreglo) {
   };
 }
 
-function importData(setRows){
-  const iteration = fecha()/7;
-  let control = 0;
-  let date = new Date(Date.now());
-  for(let i=1;i<iteration+1;i++){
+function importData(setRows,dateChange){
+  const data = [];
+  let control = 1;
+  for(let i=1;i<=5;i++){
     let arrDay = [];
     //control++;
     for(let j=control;j<=(i*7);j++){
       control = j;
-      const temp = new Date(date.getFullYear(),date.getMonth(),control);
-      arrDay.push(temp.getMonth()===date.getMonth()?temp.getDate():null);
+      const temp = new Date(dateChange.year,dateChange.month,control);
+      
+      arrDay.push(temp.getMonth()===dateChange.month?temp.getDate():null);
     }
+    //control++;
     data.push(createData(arrDay));
-  }
+  }  
   setRows(data);
 }
-const data = [];
+
 export default function App() {
   const [rows,setRows] = React.useState([]);
+  const [dateChange,setDateChange] = React.useState({
+    year:new Date(Date.now()).getFullYear(),
+    month:new Date(Date.now()).getMonth(),
+    day:0,
+  });
   React.useEffect(()=>{
-    importData(setRows);
-  },[]);
+    importData(setRows,dateChange);
+  },[dateChange]);
   return (
     <>
-      <TableModel key={1} columns={columns} rows={rows}></TableModel>
+      <TableModel key={1} columns={columns} rows={rows} setDateChange={setDateChange} dateChange={dateChange}></TableModel>
     </>
   );
 }
