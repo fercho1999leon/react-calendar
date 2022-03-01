@@ -44,7 +44,7 @@ export default function TableModel(props) {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth, textAlign:'center'}}
+                  style={{ minWidth: column.minWidth, width:'inherit', textAlign:'center'}}
                 >
                   {column.label}
                 </TableCell>
@@ -60,9 +60,9 @@ export default function TableModel(props) {
                     {props.columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} sx={{padding:'1%'}} align={column.align}>
+                        <TableCell key={column.id} sx={{padding:'0.5%'}} align={column.align}>
                           {
-                            value?<Rows day={value} id={column.id}></Rows>:null
+                            value?<Rows day={value} id={(new Date(props.dateChange.year,props.dateChange.month,value)).toString().split(' ')[0]}></Rows>:null
                           }
                         </TableCell>
                       );
@@ -81,10 +81,10 @@ export default function TableModel(props) {
             <IconButton sx={ItenStyle}>
               <ArrowBackIosIcon onClick={(e)=>{
                 const temp = props.dateChange;
-                if(props.dateChange.month>1){
+                if(props.dateChange.month>=1){
                   temp.month = props.dateChange.month-1;
                 }else{
-                  temp.month = 12;
+                  temp.month = 11;
                   temp.year = props.dateChange.year-1;
                 }
                 props.setDateChange({
@@ -99,10 +99,10 @@ export default function TableModel(props) {
             <IconButton sx={ItenStyle}>
               <ArrowForwardIosIcon onClick={(e)=>{
                 const temp = props.dateChange;
-                if(props.dateChange.month<12){
+                if(props.dateChange.month<11){
                   temp.month = props.dateChange.month+1;
                 }else{
-                  temp.month = 1;
+                  temp.month = 0;
                   temp.year = props.dateChange.year+1;
                 }
                 props.setDateChange({

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Notification from './Notification';
+import data from '../rowsTable/notificationJson.json';
 
 const colorList = [
     {id:1, color:'#6874CD'},
@@ -13,16 +15,14 @@ const colorList = [
     {id:8, color:'#CD9B68'},
 ];
 
-const renderBox = (setTemp) =>{
+const showNotify = (day,importData) =>{
     let arryRows = [];
-    for(let i = 0 ; i<2 ; i++){
-        arryRows.push(
-            <Grid item xs={12} key={i}>
-                <h3>00:00:00</h3>
-            </Grid>
-        );
-    }
-    setTemp(arryRows);
+    importData.map((el)=>{
+        if(el.day===day){
+            arryRows.push(el);
+        }
+    });
+    return arryRows;
 }
 
 const calculaColor = () => {
@@ -32,21 +32,17 @@ const calculaColor = () => {
 export default function Rows (props){
     const [temp,setTemp]=React.useState([]);
     React.useEffect(()=>{
-        renderBox(setTemp);
+        setTemp(data);
     },[]);
     return(
         <>
-            <Box sx={{ flexGrow: 1 , textAlign:'center', backgroundColor:calculaColor(), borderRadius:'10px',}}>
-                <Grid container spacing={1} sx={{cursor: 'pointer', height: '9.5rem' , padding: '10px', color:'#2C2C2C', transition: 'height 0.5s ease-out', '&:hover':{height:'12rem'}}}>
-                    <Grid item xs={12}>
+            <Box sx={{textAlign:'center',backgroundColor:calculaColor(), borderRadius:'10px',}}>
+                <Grid container spacing={0} sx={{height: '9.5rem' , padding: '10px', color:'#2C2C2C', transition: 'height 0.5s ease-out 0.2s', '&:hover':{height:'12rem'}}}>
+                    <Grid item xs={12} >
                         <h2>{props.id}</h2>
                         <h2>{props.day}</h2>
                     </Grid>
-                    {
-                        temp.map((el)=>(
-                            el
-                        ))
-                    }
+                    <Notification notifications={showNotify(props.day,temp)}></Notification>
                 </Grid>
             </Box>
         </>

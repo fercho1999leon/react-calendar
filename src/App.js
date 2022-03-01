@@ -3,13 +3,13 @@ import './App.css';
 import TableModel from './calendar/bodyCalendar/TableModel';
 
 const columns = [
-  { id: 'Mon', label: '', minWidth: '6rem'},
-  { id: 'Tue', label: '', minWidth: '6rem'},
-  { id: 'Wed', label: '', minWidth: '6rem'},
-  { id: 'Thu', label: '', minWidth: '6rem'},
-  { id: 'Fri', label: '', minWidth: '6rem'},
-  { id: 'Sat', label: '', minWidth: '6rem'},
-  { id: 'Sun', label: '', minWidth: '6rem'},
+  { id: 'Mon', label: 'LUNES', minWidth: '6rem'},
+  { id: 'Tue', label: 'MARTES', minWidth: '6rem'},
+  { id: 'Wed', label: 'MIERCOLES', minWidth: '6rem'},
+  { id: 'Thu', label: 'JUEVES', minWidth: '6rem'},
+  { id: 'Fri', label: 'VIERNES', minWidth: '6rem'},
+  { id: 'Sat', label: 'SABADO', minWidth: '6rem'},
+  { id: 'Sun', label: 'DOMINGO', minWidth: '6rem'},
 ];
 
 function createData(arreglo) {
@@ -27,16 +27,32 @@ function createData(arreglo) {
 function importData(setRows,dateChange){
   const data = [];
   let control = 1;
-  for(let i=1;i<=5;i++){
+  let start = true;
+  let bandera = 0;
+  for(let i=1;i<=6;i++){
     let arrDay = [];
-    //control++;
-    for(let j=control;j<=(i*7);j++){
+    for(let j=control;j<=(i*7)-bandera;j++){
       control = j;
       const temp = new Date(dateChange.year,dateChange.month,control);
+      if(start){
+        columns.map(el =>{
+          if(!(temp.toString().split(' ')[0]===el.id)){
+            if(start){
+              arrDay.push(null);
+              bandera++;
+            }
+          }else if(temp.toString().split(' ')[0]===el.id){
+            arrDay.push(temp.getMonth()===dateChange.month?temp.getDate():null);
+            start=false;
+          }
+        });
+      }else{
+        arrDay.push(temp.getMonth()===dateChange.month?temp.getDate():null);
+      }
       
-      arrDay.push(temp.getMonth()===dateChange.month?temp.getDate():null);
     }
-    //control++;
+    console.log(control);
+    control++;
     data.push(createData(arrDay));
   }  
   setRows(data);
