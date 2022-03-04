@@ -26,7 +26,7 @@ const showNotify = (day,importData) =>{
     return arrayRows;
 }
 
-const calculaColor = () => {
+const calculateColor = () => {
     return colorList[Math.floor(Math.random() * (7))].color;
 }
 
@@ -37,7 +37,7 @@ export default function Rows (props){
     },[]);
     return(
         <>
-            <Box sx={{textAlign:'center',backgroundColor:calculaColor(), borderRadius:'10px',}}>
+            <Box sx={{textAlign:'center',backgroundColor:calculateColor(), borderRadius:'10px',}}>
                 <Grid container spacing={0} sx={{height: '9.5rem' , padding: '10px', color:'#2C2C2C', transition: 'height 0.5s ease-out 0.2s', '&:hover':{height:'12rem'}}}>
                     <Grid item xs={12} >
                         <h2>{props.id}</h2>
