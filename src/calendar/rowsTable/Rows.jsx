@@ -16,17 +16,18 @@ const colorList = [
 ];
 
 const showNotify = (day,importData) =>{
-    let arryRows = [];
-    importData.map((el)=>{
-        if(el.day===day){
-            arryRows.push(el);
+    let arrayRows = [];
+    // eslint-disable-next-line array-callback-return
+    importData.map(el => {
+        if (el.day === day) {
+            arrayRows.push(el);
         }
     });
-    return arryRows;
+    return arrayRows;
 }
 
 const calculaColor = () => {
-    return colorList[Math.floor(Math.random() * (7 + 0)) - 0].color;
+    return colorList[Math.floor(Math.random() * (7))].color;
 }
 
 export default function Rows (props){
@@ -42,7 +43,7 @@ export default function Rows (props){
                         <h2>{props.id}</h2>
                         <h2>{props.day}</h2>
                     </Grid>
-                    <Notification notifications={showNotify(props.day,temp)}></Notification>
+                    <Notification notifications={showNotify(props.day, temp)}/>
                 </Grid>
             </Box>
         </>
