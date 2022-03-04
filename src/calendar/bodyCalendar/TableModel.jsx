@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Rows from '../rowsTable/Rows';
 
-const ItenStyle = {
+const ItemStyle = {
   margin: '10px',
   textAlign: 'center',
   color:'#676565',
@@ -32,7 +32,7 @@ export default function TableModel(props) {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <h1 style={ItenStyle}>{(new Date(props.dateChange.year,props.dateChange.month,15)).toString().split(' ')[1]}</h1>
+            <h1 style={ItemStyle}>{(new Date(props.dateChange.year,props.dateChange.month,15)).toString().split(' ')[1]}</h1>
           </Grid>
         </Grid>
       </Box>
@@ -62,7 +62,7 @@ export default function TableModel(props) {
                       return (
                         <TableCell key={column.id} sx={{padding:'0.5%'}} align={column.align}>
                           {
-                            value?<Rows day={value} id={(new Date(props.dateChange.year,props.dateChange.month,value)).toString().split(' ')[0]}></Rows>:null
+                            value?<Rows day={value} id={(new Date(props.dateChange.year, props.dateChange.month, value)).toString().split(' ')[0]}/>:null
                           }
                         </TableCell>
                       );
@@ -78,25 +78,25 @@ export default function TableModel(props) {
           <Grid item xs={8} sm={10} md={54 / 5}>
           </Grid>
           <Grid item xs={2 / 4} sm={2 / 4} md={2 / 4}>
-            <IconButton sx={ItenStyle}>
-              <ArrowBackIosIcon onClick={(e)=>{
+            <IconButton sx={ItemStyle}>
+              <ArrowBackIosIcon onClick={(e) => {
                 const temp = props.dateChange;
-                if(props.dateChange.month>=1){
-                  temp.month = props.dateChange.month-1;
-                }else{
+                if (props.dateChange.month >= 1) {
+                  temp.month = props.dateChange.month - 1;
+                } else {
                   temp.month = 11;
-                  temp.year = props.dateChange.year-1;
+                  temp.year = props.dateChange.year - 1;
                 }
                 props.setDateChange({
-                  year:temp.year,
-                  month:temp.month,
-                  day:0,
+                  year: temp.year,
+                  month: temp.month,
+                  day: 0,
                 });
-              }}></ArrowBackIosIcon>
+              }}/>
             </IconButton>
           </Grid>
           <Grid item xs={2 / 4} sm={2 / 4} md={2 / 4}>
-            <IconButton sx={ItenStyle}>
+            <IconButton sx={ItemStyle}>
               <ArrowForwardIosIcon onClick={(e)=>{
                 const temp = props.dateChange;
                 if(props.dateChange.month<11){
@@ -110,7 +110,7 @@ export default function TableModel(props) {
                   month:temp.month,
                   day:0,
                 });
-              }}></ArrowForwardIosIcon>
+              }}/>
             </IconButton>
           </Grid>
         </Grid>
