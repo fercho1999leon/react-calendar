@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Notification from './Notification';
-import data from '../rowsTable/notificationJson.json';
 
 const colorList = [
     {id:1, color:'#6874CD'},
@@ -15,26 +14,11 @@ const colorList = [
     {id:8, color:'#CD9B68'},
 ];
 
-const showNotify = (day,importData) =>{
-    let arrayRows = [];
-    // eslint-disable-next-line array-callback-return
-    importData.map(el => {
-        if (el.day === day) {
-            arrayRows.push(el);
-        }
-    });
-    return arrayRows;
-}
-
 const calculateColor = () => {
     return colorList[Math.floor(Math.random() * (7))].color;
 }
 
 export default function Rows (props){
-    const [temp,setTemp]=React.useState([]);
-    React.useEffect(()=>{
-        setTemp(data);
-    },[]);
     return(
         <>
             <Box sx={{textAlign:'center',backgroundColor:calculateColor(), borderRadius:'10px',}}>
@@ -43,7 +27,7 @@ export default function Rows (props){
                         <h2>{props.id}</h2>
                         <h2>{props.day}</h2>
                     </Grid>
-                    <Notification notifications={showNotify(props.day, temp)}/>
+                    <Notification notifications={props.notifications}/>
                 </Grid>
             </Box>
         </>

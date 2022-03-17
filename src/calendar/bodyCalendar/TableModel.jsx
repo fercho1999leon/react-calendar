@@ -12,11 +12,23 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Rows from '../rowsTable/Rows';
+import data from '../rowsTable/notificationJson.json';
 
 const ItemStyle = {
   margin: '10px',
   textAlign: 'center',
   color:'#676565',
+}
+//Se desea mover la data de las notificaciones para que no este presente toda la data en cada row
+const showNotify = (day,importData) =>{
+  let arrayRows = [];
+  // eslint-disable-next-line array-callback-return
+  importData.map(el => {
+    if (el.day === day) {
+      arrayRows.push(el);
+    }
+  });
+  return arrayRows;
 }
 
 export default function TableModel(props) {
@@ -27,6 +39,10 @@ export default function TableModel(props) {
    */
   const page = 0;
   const rowsPerPage = 10;
+  const [temp,setTemp]=React.useState([]);
+  React.useEffect(()=>{
+    setTemp(data);
+  },[]);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <Box sx={{ flexGrow: 1 }}>
@@ -62,7 +78,7 @@ export default function TableModel(props) {
                       return (
                         <TableCell key={column.id} sx={{padding:'0.5%'}} align={column.align}>
                           {
-                            value?<Rows day={value} id={(new Date(props.dateChange.year, props.dateChange.month, value)).toString().split(' ')[0]}/>:null
+                            value?<Rows day={value} notifications={showNotify(value, temp)} id={(new Date(props.dateChange.year, props.dateChange.month, value)).toString().split(' ')[0]}/>:null
                           }
                         </TableCell>
                       );
