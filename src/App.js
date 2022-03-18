@@ -35,6 +35,7 @@ function importData(setRows,dateChange){
       control = j;
       const temp = new Date(dateChange.year,dateChange.month,control);
       if(start){
+        // eslint-disable-next-line no-loop-func,array-callback-return
         columns.map(el =>{
           if(!(temp.toString().split(' ')[0]===el.id)){
             if(start){
@@ -70,7 +71,7 @@ export default function App() {
   },[dateChange]);
   return (
     <>
-      <TableModel key={1} columns={columns} rows={rows} setDateChange={setDateChange} dateChange={dateChange}></TableModel>
+      <TableModel key={1} columns={columns} rows={rows} setDateChange={setDateChange} dateChange={dateChange}/>
     </>
   );
 }
